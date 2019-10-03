@@ -8,9 +8,14 @@ use DB;
 
 class credencialesController extends Controller
 {
+
+      public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin');
+      }
+
       public function create(Request $request)
       {
-
 
         $validacion = credencial::where("usuario","like","%".$request->Usuario."%")->get();
 
@@ -44,12 +49,12 @@ class credencialesController extends Controller
 
             if(count($validation) == 1)
             {
-              if($id==$validation[0]->id)
+              /*if($id==$validation[0]->id)
               {
                 return redirect('/users')->with('status',
                 "¡ El valor ".$request->Usuario." ya se ha actualizado!");
-              }
-              else{
+              }*/
+              if($id!=$validation[0]->id){
                 return redirect('/users')->with('status',
                 "¡ El valor ".$request->Usuario." ya tiene uno similar en el sistema!");
               }
@@ -59,8 +64,8 @@ class credencialesController extends Controller
 
           $credencialesE = credencial::find($id);
           $credencialesE->username = $request->Username;
-          $credenciales->usuario = $request->Usuario;
-          $credenciales->password = $request->password;
+          $credencialesE->usuario = $request->Usuario;
+          $credencialesE->password = $request->password1;
           $credencialesE->save();
           return redirect('/users')->with('status', "¡credencial editada!");
 

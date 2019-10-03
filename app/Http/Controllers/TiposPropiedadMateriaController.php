@@ -8,6 +8,12 @@ use DB;
 
 class TiposPropiedadMateriaController extends Controller
 {
+    public function __construct(){
+      $this->middleware('auth');
+      $this->middleware('admin');
+    }
+
+    public function create (Request $request){
       $validacion = TipoPropiedadMateria::where("nombre.","like","%".$request->Nombre."%")->get();
 
       if(count($validacion)  > 0 )
@@ -15,14 +21,13 @@ class TiposPropiedadMateriaController extends Controller
           return redirect('/Materia')->with('status',
            "¡ El valor ".$request->Nombre." ya tiene un similar en el sistema !");
       }
-      public function create (Request $request){
-        $tipos_propiedad_materia= new TipoPropiedadMateria();
-        $tipos_propiedad_materia->nombre = $request->Nombre;
-        $tipos_propiedad_materia->save();
-        return redirect('/Materia')->with('status', "!creado!");
+      $tipos_propiedad_materia= new TipoPropiedadMateria();
+      $tipos_propiedad_materia->nombre = $request->Nombre;
+      $tipos_propiedad_materia->save();
+      return redirect('/Materia')->with('status', "!creado!");
 
 
-  }
+}
 
       public function edit ($id)  {
           $tipos_propiedad_materiaE = TipoPropiedadMateria::find($id);

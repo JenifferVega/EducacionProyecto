@@ -8,6 +8,11 @@ use DB;
 
 class propiedadeNotaController extends Controller
 {
+  public function __construct(){
+    $this->middleware('auth');
+    $this->middleware('admin');
+  }
+
   public function create (Request $request){
 
     $validacion = propiedadeNota::where("propiedad","like","%".$request->propiedad."%")->get();

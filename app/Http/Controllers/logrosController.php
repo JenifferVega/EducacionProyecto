@@ -8,6 +8,11 @@ use App\Materia;
 
 class logrosController extends Controller
 {
+  public function __construct(){
+    $this->middleware('auth');
+    $this->middleware('admin');
+  }
+
   public function create (Request $request){
 
     $logros= new logro();

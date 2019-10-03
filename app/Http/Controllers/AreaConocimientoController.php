@@ -7,9 +7,14 @@ use App\AreaConocimientos;
 use DB;
 
 class AreaConocimientoController extends Controller
-      {
+{
 
-        public function create (Request $request){
+      public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin');
+      }
+
+      public function create (Request $request){
 
           $validacion = AreaConocimientos::where("nombre","like","%".$request->Nombre."%")->get();
 
@@ -18,7 +23,7 @@ class AreaConocimientoController extends Controller
               return redirect('/ParaMet')->with('status',
                "¡ El valor ".$request->Nombre." ya tiene un similar en el sistema !");
           }
-          
+
           $areas_conocimiento = new AreaConocimientos();
           $areas_conocimiento->nombre = $request->Nombre;
         //  print_r ($_REQUEST);

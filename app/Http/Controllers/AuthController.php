@@ -35,11 +35,11 @@ class AuthController extends Controller
 
   }
 
-      public function logout(){
-        Auth::logout();
-        return Redirect::to('/');
-        //return redirect('/login')->with('status', "¡Sesión finalizada exitosamente!");
-        //print_r($_SESSION);
-      }
+  public function logout(){
+    Auth::logout();
+    return Redirect::to('/');
+    //return redirect('/login')->with('status', "¡Sesión finalizada exitosamente!");
+    //print_r($_SESSION);
+  }
 
 }

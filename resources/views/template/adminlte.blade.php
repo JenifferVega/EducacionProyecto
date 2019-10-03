@@ -92,6 +92,8 @@
         <li class="header">MENU DE NAVEGACION</li>
         <li><a href="/home">  <i class="fa fa-dashboard"></i> <span>Análisis de información</span></a></li>
         <li class="treeview">
+
+        @if( App\Usuarios::find(Auth::user()->usuario)->rol == 1 )
         <li class="treeview">
           <a href="#">
             <i class="fa fa-user"></i> <span>Usuario</span>
@@ -100,12 +102,16 @@
             </span>
           </a>
           <ul class="treeview-menu">
-              <li class=""><a href="/users"><i class="fa fa-circle-o"></i> Administrar Usuarios</a></li>
+            <li class=""><a href="/users"><i class="fa fa-circle-o"></i> Administrar Usuarios</a></li>
             <li><a href="/parameters"><i class="fa fa-circle-o"></i> Administrar Parámetros</a></li>
 
           </ul>
         </li>
+        @endif
+
         <li class="treeview">
+          @if( App\Usuarios::find(Auth::user()->usuario)->rol == 1 )
+
         <li class=" treeview">
           <a href="#">
             <i class="fa fa-university"></i> <span>Institución</span>
@@ -118,6 +124,7 @@
             <li><a href="/ParaMet"><i class="fa fa-circle-o"></i> Administrar Parámetros</a></li>
           </ul>
         </li>
+        @endif
         <li class="treeview">
         <li class="treeview">
           <a href="#">
@@ -128,7 +135,9 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="/boletin">  <i class="fa fa-dashboard"></i> <span>Gestionar Boletin</span></a></li>
+            @if( App\Usuarios::find(Auth::user()->usuario)->rol == 1 )
             <li><a href="/Materia"><i class="fa fa-circle-o"></i> Administrar Parámetros</a></li>
+            @endif
           </ul>
         </li>
         <li>

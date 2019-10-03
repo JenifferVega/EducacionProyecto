@@ -215,7 +215,7 @@ Gestionar Boletin
 
           <div class="form-group">
             <label  for="Tipo de Documento">Valor de la nota</label>
-
+            <input type="text" >
           </div>
 
           <div class="form-group">

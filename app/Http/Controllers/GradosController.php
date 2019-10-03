@@ -10,42 +10,47 @@ use DB;
 
 class GradosController extends Controller
 {
-  public function index()
-  {
-    $grados = Grados::All();
-    $areas_conocimiento= AreaConocimientos::All();
-    $periodo = periodos::All();
-
-    return view("institucionParaMets",compact('grados',"areas_conocimiento","periodo"));
-  }
-  public function create (Request $request){
-
-    $validacion = Grados::where("nombre","like","%".$request->Nombre."%")->get();
-
-    if(count($validacion)  > 0 )
-    {
-        return redirect('/ParaMet')->with('status',
-         "¡ El valor ".$request->Nombre." ya tiene un similar en el sistema !");
+    public function __construct(){
+      $this->middleware('auth');
+      $this->middleware('admin');
     }
 
-    $grados = new Grados();
-    $grados->nombre = $request->Nombre;
-  //  print_r ($_REQUEST);
-    $grados->save();
-    return redirect('/ParaMet')->with('status', "¡Grado creado!");
+    public function index()
+    {
+      $grados = Grados::All();
+      $areas_conocimiento= AreaConocimientos::All();
+      $periodo = periodos::All();
 
-  }
-  public function edit ($id)  {
-      $gradosE = Grados::find($id);
-      return response()->json(compact("gradosE"));
+      return view("institucionParaMets",compact('grados',"areas_conocimiento","periodo"));
+    }
+    public function create (Request $request){
 
-  }
-  public function update(Request $request, $id )
-  {
+      $validacion = Grados::where("nombre","like","%".$request->Nombre."%")->get();
 
-    $sql = "Select * from grados where nombre like '%".$request->Nombre."%'";
-    $validation = DB::SELECT(DB::RAW($sql));
-  
+      if(count($validacion)  > 0 )
+      {
+          return redirect('/ParaMet')->with('status',
+           "¡ El valor ".$request->Nombre." ya tiene un similar en el sistema !");
+      }
+
+      $grados = new Grados();
+      $grados->nombre = $request->Nombre;
+    //  print_r ($_REQUEST);
+      $grados->save();
+      return redirect('/ParaMet')->with('status', "¡Grado creado!");
+
+    }
+    public function edit ($id)  {
+        $gradosE = Grados::find($id);
+        return response()->json(compact("gradosE"));
+
+    }
+    public function update(Request $request, $id )
+    {
+
+      $sql = "Select * from grados where nombre like '%".$request->Nombre."%'";
+      $validation = DB::SELECT(DB::RAW($sql));
+
       if(count($validation) == 1)
       {
         if($id==$validation[0]->id)

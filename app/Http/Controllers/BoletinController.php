@@ -15,6 +15,17 @@ use App\propiedadeNota;
 
 class BoletinController extends Controller
 {
+
+    public function __construct(){
+      $this->middleware('auth');
+
+      //Estos middleware son ejemplos para saber como se implementan
+          //$this->middleware('auth', ['only' => ['create', 'store', 'edit', 'delete']]);
+          // Alternativly
+          //$this->middleware('auth', ['except' => ['index', 'show']]);
+
+    }
+
     public function index ()
     {
 

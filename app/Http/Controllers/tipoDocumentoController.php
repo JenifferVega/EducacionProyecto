@@ -5,32 +5,36 @@ use Illuminate\Http\Request;
 use App\tipoDocumento;
 use DB;
 
-    class tipoDocumentoController extends Controller
-    {
+class tipoDocumentoController extends Controller
+{
+  public function __construct(){
+    $this->middleware('auth');
+    $this->middleware('admin');
+  }
 
-        public function create (Request $request){
-          $validacion = tipoDocumento::where("nombre","like","%".$request->Nombre."%")->get();
+    public function create (Request $request){
+      $validacion = tipoDocumento::where("nombre","like","%".$request->Nombre."%")->get();
 
-          if(count($validacion)  > 0 )
-          {
-              return redirect('/parameters')->with('status',
-               "¡ El valor ".$request->Nombre." ya tiene un similar en el sistema !");
-          }
+      if(count($validacion)  > 0 )
+      {
+          return redirect('/parameters')->with('status',
+           "¡ El valor ".$request->Nombre." ya tiene un similar en el sistema !");
+      }
 
 
-        $TipoDocumento = new tipoDocumento();
-        $TipoDocumento->nombre = $request->Nombre;
-      //  print_r ($_REQUEST);
-        $TipoDocumento->save();
-        return redirect('/parameters')->with('status', "!Documento creado!");
+    $TipoDocumento = new tipoDocumento();
+    $TipoDocumento->nombre = $request->Nombre;
+  //  print_r ($_REQUEST);
+    $TipoDocumento->save();
+    return redirect('/parameters')->with('status', "!Documento creado!");
 
       }
 
-      public function edit ($id)  {
-          $TipoDocumentoE = tipoDocumento::find($id);
-          return response()->json(compact("TipoDocumentoE"));
+    public function edit ($id)  {
+        $TipoDocumentoE = tipoDocumento::find($id);
+        return response()->json(compact("TipoDocumentoE"));
 
-      }
+    }
 
       public function update(Request $request, $id )
       {

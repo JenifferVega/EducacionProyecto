@@ -15,6 +15,11 @@ use DB;
 
     class materiaController extends Controller
     {
+      public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin');
+      }
+
       public function index()
       {
         //$materia = Materia::All();

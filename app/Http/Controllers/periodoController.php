@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use App\periodos;
 use DB;
 
-    class periodoController extends Controller
-    {
+class periodoController extends Controller
+{
+    public function __construct(){
+      $this->middleware('auth');
+      $this->middleware('admin');
+    }
 
     public function create (Request $request){
 
